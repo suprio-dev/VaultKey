@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VaultKey — Password Studio</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    h1,
+    h2,
+    .display {
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    body {
+      background:
+        radial-gradient(ellipse at 12% 0%, rgba(99, 102, 241, .13), transparent 35%),
+        radial-gradient(ellipse at 95% 80%, rgba(139, 92, 246, .09), transparent 30%),
+        #09090f;
+    }
+
+    input[type="range"] {
+      accent-color: #a78bfa;
+    }
+
+    input[type="checkbox"] {
+      accent-color: #8b5cf6;
+    }
+
+    .glass {
+      background: rgba(19, 19, 31, .84);
+      border: 1px solid rgba(255, 255, 255, .085);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-slate-100 selection:bg-violet-500/30">
+
+  <header class="mx-auto flex max-w-6xl items-center justify-between px-5 py-6 sm:px-8">
+    <a href="#" class="flex items-center gap-3">
+      <div
+        class="flex h-10 w-10 items-center justify-center rounded-xl bg-violet-500/15 text-violet-300 ring-1 ring-violet-400/20">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <rect x="4" y="10" width="16" height="11" rx="2.5" />
+          <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" />
+        </svg>
+      </div>
+      <div>
+        <span class="display text-xl font-bold tracking-tight">Vault<span class="text-violet-400">Key</span></span>
+        <p class="text-[10px] uppercase tracking-[.22em] text-slate-500">Password studio</p>
+      </div>
+    </a>
+    <div class="hidden items-center gap-2 rounded-full border border-emerald-400/15 bg-emerald-400/5 px-3 py-2 sm:flex">
+      <span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>
+      <span class="text-xs text-slate-400">Generated locally in your browser</span>
+    </div>
+    <div class="flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 text-slate-400">
+      <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+        <circle cx="12" cy="12" r="9" />
+        <path d="M12 11v5M12 8h.01" />
+      </svg>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-6xl px-5 pb-16 pt-8 sm:px-8 sm:pt-14">
+    <div class="mx-auto mb-10 max-w-2xl text-center">
+      <div
+        class="mb-5 inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-400/[.07] px-3.5 py-1.5 text-xs font-medium text-violet-300">
+        <span>✳</span> Your digital security toolkit
+      </div>
+      <h1 class="text-4xl font-semibold tracking-tight sm:text-6xl">
+        Strong passwords.<br>
+        <span class="bg-gradient-to-r from-violet-300 via-indigo-300 to-fuchsia-300 bg-clip-text text-transparent">Zero
+          guesswork.</span>
+      </h1>
+      <p class="mx-auto mt-5 max-w-lg text-sm leading-7 text-slate-400 sm:text-base">
+        Create unique, hard-to-guess passwords in seconds. Customize every detail and keep your credentials private.
+      </p>
+    </div>
+
+    <div class="mx-auto grid max-w-5xl gap-5 lg:grid-cols-[1.05fr_.95fr]">
+
+      <!-- Password output -->
+      <section class="glass rounded-3xl p-5 shadow-2xl shadow-black/20 sm:p-7">
+        <div class="mb-6 flex items-center justify-between">
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[.18em] text-slate-500">Your password</p>
+            <h2 class="mt-1 text-xl font-semibold">Password generator</h2>
+          </div>
+          <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-violet-400/10 text-violet-300">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+              <path d="M12 3 5 6v5c0 4.5 3 7.5 7 10 4-2.5 7-5.5 7-10V6l-7-3Z" />
+              <path d="m9 12 2 2 4-4" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border border-white/[.08] bg-black/25 p-4 sm:p-5">
+          <div class="flex min-h-20 items-center justify-between gap-3">
+            <p id="passwordOutput"
+              class="display break-all text-lg font-medium leading-8 tracking-wide text-violet-100 sm:text-xl">Click
+              generate to begin</p>
+            <button id="copyBtn" type="button" aria-label="Copy password"
+              class="shrink-0 rounded-xl border border-white/10 p-3 text-slate-400 transition hover:border-violet-400/40 hover:bg-violet-400/10 hover:text-violet-300">
+              <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="8" y="8" width="12" height="12" rx="2" />
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" />
+              </svg>
+            </button>
+          </div>
+          <div class="mt-4 border-t border-white/[.07] pt-4">
+            <div class="mb-2 flex items-center justify-between gap-3">
+              <span class="text-xs text-slate-500">Password strength</span>
+              <span id="strengthLabel" class="text-xs font-semibold text-slate-500">Not generated</span>
+            </div>
+            <div id="strengthBar" class="flex gap-1.5" aria-label="Password strength">
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+            </div>
+          </div>
+        </div>
+
+       <div class="flex gap-5">
+         <button id="generateBtn" type="button"
+          class="mt-5 flex w-full items-center justify-center gap-2.5 rounded-xl bg-violet-500 px-5 py-4 text-sm font-semibold text-white shadow-lg shadow-violet-950/30 transition hover:bg-violet-400 active:scale-[.99]">
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M20 7v5h-5M4 17v-5h5" />
+            <path d="M5.5 9a7 7 0 0 1 11.8-2L20 12M4 12l2.7 5a7 7 0 0 0 11.8-2" />
+          </svg>
+          Generate password
+        </button>
+        <button
+  id="resetBtn"
+  type="button"
+  class="inline-flex items-center mt-5 justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-medium text-slate-300 transition-all duration-200 hover:border-rose-400/30 hover:bg-rose-400/10 hover:text-rose-300 active:scale-95"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="17"
+    height="17"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="1.8"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+    <path d="M3 3v5h5" />
+  </svg>
+  Reset
+</button>
+       </div>
+        <p id="statusMessage" role="status" aria-live="polite" class="mt-3 min-h-5 text-center text-xs text-slate-500">
+          Your new password will appear here.</p>
+
+        <div class="mt-5 flex items-start gap-3 rounded-xl border border-emerald-400/10 bg-emerald-400/[.035] p-4">
+          <span class="mt-0.5 text-emerald-400">✓</span>
+          <p class="text-xs leading-6 text-slate-400">Designed to generate passwords inside your browser. Never reuse
+            the same password across important accounts.</p>
+        </div>
+      </section>
+
+      <!-- Password configuration -->
+      <section class="glass rounded-3xl p-5 sm:p-7">
+        <div class="mb-7">
+          <p class="text-xs font-semibold uppercase tracking-[.18em] text-slate-500">Configuration</p>
+          <h2 class="mt-1 text-xl font-semibold">Make it yours</h2>
+          <p class="mt-2 text-sm text-slate-500">Adjust the settings for your ideal password.</p>
+        </div>
+
+        <div class="mb-8 rounded-2xl border border-white/[.07] bg-white/[.025] p-4">
+          <div class="mb-5 flex items-center justify-between">
+            <label for="lengthSlider" class="text-sm font-medium text-slate-300">Password length</label>
+            <span id="lengthValue"
+              class="display rounded-lg border border-violet-400/20 bg-violet-400/10 px-3 py-1.5 text-lg font-semibold text-violet-300">6</span>
+          </div>
+          <input id="lengthSlider" type="range" min="4" max="20" step="1" value="6" class="w-full cursor-pointer" />
+          <div class="mt-2 flex justify-between text-xs text-slate-600"><span>4 characters</span><span>20
+              characters</span></div>
+        </div>
+
+        <div class="space-y-4">
+          <p class="text-xs font-semibold uppercase tracking-[.15em] text-slate-500">Character types</p>
+
+          <label
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-white/[.07] px-4 py-3.5 transition hover:border-violet-400/20 hover:bg-white/[.02]">
+            <span class="flex items-center gap-3">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-indigo-400/10 text-sm font-bold text-indigo-300">AZ</span>
+              <span><span class="block text-sm font-medium">Uppercase letters</span><span
+                  class="mt-0.5 block text-xs text-slate-500">A–Z</span></span>
+            </span>
+            <input id="uppercase" type="checkbox" class="h-4 w-4 cursor-pointer rounded">
+          </label>
+
+          <label
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-white/[.07] px-4 py-3.5 transition hover:border-violet-400/20 hover:bg-white/[.02]">
+            <span class="flex items-center gap-3">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-sky-400/10 text-sm font-bold text-sky-300">az</span>
+              <span><span class="block text-sm font-medium">Lowercase letters</span><span
+                  class="mt-0.5 block text-xs text-slate-500">a–z</span></span>
+            </span>
+            <input id="lowercase" type="checkbox" class="h-4 w-4 cursor-pointer rounded">
+          </label>
+
+          <label
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-white/[.07] px-4 py-3.5 transition hover:border-violet-400/20 hover:bg-white/[.02]">
+            <span class="flex items-center gap-3">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-emerald-400/10 text-sm font-bold text-emerald-300">09</span>
+              <span><span class="block text-sm font-medium">Numbers</span><span
+                  class="mt-0.5 block text-xs text-slate-500">0–9</span></span>
+            </span>
+            <input id="numbers" type="checkbox" class="h-4 w-4 cursor-pointer rounded">
+          </label>
+
+          <label
+            class="flex cursor-pointer items-center justify-between gap-4 rounded-xl border border-white/[.07] px-4 py-3.5 transition hover:border-violet-400/20 hover:bg-white/[.02]">
+            <span class="flex items-center gap-3">
+              <span
+                class="flex h-9 w-9 items-center justify-center rounded-lg bg-fuchsia-400/10 text-lg font-bold text-fuchsia-300">#</span>
+              <span><span class="block text-sm font-medium">Symbols</span><span
+                  class="mt-0.5 block text-xs text-slate-500">! @ # $ % &amp; *</span></span>
+            </span>
+            <input id="symbols" type="checkbox" class="h-4 w-4 cursor-pointer rounded">
+          </label>
+        </div>
+
+        <div class="my-6 border-t border-white/[.07]"></div>
+
+        <label class="flex cursor-pointer items-center justify-between gap-4">
+          <span class="flex items-center gap-3">
+            <span
+              class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[.07] text-slate-400">⊘</span>
+            <span><span class="block text-sm font-medium">Exclude similar characters</span><span
+                class="mt-1 block text-xs leading-5 text-slate-500">Avoid O, 0, l, 1 and other lookalikes</span></span>
+          </span>
+          <input id="excludeSimilar" type="checkbox" class="h-4 w-4 shrink-0 cursor-pointer rounded">
+        </label>
+        <p id="errorMessage" role="alert" class="mt-4 hidden text-sm text-rose-400">Select at least one character type.
+        </p>
+      </section>
+    </div>
+
+    <footer class="mt-10 text-center">
+      <p class="text-xs text-slate-600">VaultKey · Built for privacy, designed for simplicity.</p>
+    </footer>
+  </main>
+  <script src="index.js"></script>
+</body>
+
+</html>
