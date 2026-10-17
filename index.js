@@ -8,6 +8,9 @@ let excludeSimilar = document.querySelector("#excludeSimilar");
 let generateBtn = document.querySelector("#generateBtn");
 let passwordOutput = document.querySelector("#passwordOutput");
 let copyBtn = document.querySelector("#copyBtn");
+let strengthLabel = document.querySelector("#strengthLabel");
+let strengthBar = document.querySelector("#strengthBar");
+let errorMessage = document.querySelector("#errorMessage");
 let counter = 0, charEnsure = "";
 let characterPool = [];
 
@@ -20,12 +23,50 @@ generateBtn.addEventListener('click', (e) => {
   characterPool = [];
   charEnsure = "";
   counter = 0;
-  if (!uppercase.checked && !lowercase.checked && !numbers.checked && !symbols.checked)
+  if (!uppercase.checked && !lowercase.checked && !numbers.checked && !symbols.checked) {
+    errorMessage.classList.remove("hidden");
     return;
+  }
+  errorMessage.classList.add("hidden");
   let response = generatePassword();
-  // displayPassword(response);
   passwordOutput.textContent = displayPassword(response).trim();
+  let score = 0;
+  password = displayPassword(response).trim();
+  if (password.length >= 8) score++;
+  if (password.length >= 12) score++;
+  if (password.length >= 16) score++;
 
+  if (/[A-Z]/.test(password)) score++;
+  if (/[a-z]/.test(password)) score++;
+  if (/[0-9]/.test(password)) score++;
+  if (/[^A-Za-z0-9]/.test(password)) score++;
+
+  if (password.length < 8 || score <= 2) {
+    strengthLabel.textContent = `Weak`;
+    strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-red-500"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>`;
+  } else if (score <= 4) {
+    strengthLabel.textContent = `Medium`;
+    strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-orange-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-orange-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>`;
+
+  } else if (score <= 5) {
+    strengthLabel.textContent = `Good`;
+    strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-yellow-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-yellow-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-yellow-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>`;
+  } else {
+    strengthLabel.textContent = `Strong`;
+    strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-emerald-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-emerald-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-emerald-400"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-emerald-400"></span>`;
+  }
   copyBtn.addEventListener('click', async (e) => {
     await navigator.clipboard.writeText(passwordOutput.textContent);
     copyBtn.textContent = "✓";
@@ -50,7 +91,7 @@ function generatePassword() {
     charEnsure += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
     counter++;
     characterPool.push(...uppercaseLetters);
-    
+
 
   }
 
@@ -109,17 +150,21 @@ function displayPassword(response) {
 }
 
 resetBtn.addEventListener('click', (e) => {
+  errorMessage.classList.add("hidden");
   passwordOutput.textContent = `Click
               generate to begin`;
   copyBtn.innerHTML = `<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                 <rect x="8" y="8" width="12" height="12" rx="2" />
                 <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" />
               </svg>`;
-uppercase.checked = false;
-    lowercase.checked = false;
-    numbers.checked = false;
-    symbols.checked = false;
-    lengthValue.textContent=`6`;
-    lengthSlider.setAttribute("value","6");
+  uppercase.checked = false;
+  lowercase.checked = false;
+  numbers.checked = false;
+  symbols.checked = false;
+  strengthLabel.textContent = `Not generated`;
+  strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
+              <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>`;
 })
 
