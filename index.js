@@ -13,6 +13,8 @@ let strengthBar = document.querySelector("#strengthBar");
 let errorMessage = document.querySelector("#errorMessage");
 let counter = 0, charEnsure = "";
 let characterPool = [];
+const similarChars = "O0oIl1!S5Z2B8G6q9Duv";
+
 
 lengthSlider.addEventListener('input', (e) => {
   e.preventDefault();
@@ -23,12 +25,19 @@ generateBtn.addEventListener('click', (e) => {
   characterPool = [];
   charEnsure = "";
   counter = 0;
+  let isClickedExcludeSimilar = excludeSimilar.checked;
   if (!uppercase.checked && !lowercase.checked && !numbers.checked && !symbols.checked) {
     errorMessage.classList.remove("hidden");
     return;
   }
   errorMessage.classList.add("hidden");
-  let response = generatePassword();
+  let response = generatePassword(isClickedExcludeSimilar);
+  if (isClickedExcludeSimilar === true) {
+    characterPool = characterPool.filter((value) => {
+      return !similarChars.includes(value)
+    })
+    response = characterPool;
+  }
   passwordOutput.textContent = displayPassword(response).trim();
   let score = 0;
   password = displayPassword(response).trim();
@@ -83,11 +92,16 @@ generateBtn.addEventListener('click', (e) => {
 
 
 
-function generatePassword() {
+function generatePassword(isClickedExcludeSimilar) {
 
 
   if (uppercase.checked) {
     let uppercaseLetters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    if (isClickedExcludeSimilar === true) {
+      uppercaseLetters = uppercaseLetters.filter((value) => {
+        return !similarChars.includes(value)
+      })
+    }
     charEnsure += uppercaseLetters[Math.floor(Math.random() * uppercaseLetters.length)];
     counter++;
     characterPool.push(...uppercaseLetters);
@@ -99,6 +113,11 @@ function generatePassword() {
 
   if (lowercase.checked) {
     let lowercaseLetters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+    if (isClickedExcludeSimilar === true) {
+      lowercaseLetters = lowercaseLetters.filter((value) => {
+        return !similarChars.includes(value)
+      })
+    }
     charEnsure += lowercaseLetters[Math.floor(Math.random() * lowercaseLetters.length)];
     counter++;
     characterPool.push(...lowercaseLetters);
@@ -110,6 +129,11 @@ function generatePassword() {
 
   if (numbers.checked) {
     let numberArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+    if (isClickedExcludeSimilar === true) {
+      numberArray = numberArray.filter((value) => {
+        return !similarChars.includes(value)
+      })
+    }
     charEnsure += numberArray[Math.floor(Math.random() * numberArray.length)];
     counter++;
     characterPool.push(...numberArray);
@@ -123,6 +147,11 @@ function generatePassword() {
 
   if (symbols.checked) {
     let symbolsArray = ["!", "@", "#", "$", "%", "&", "*"];
+    if (isClickedExcludeSimilar === true) {
+      symbolsArray = symbolsArray.filter((value) => {
+        return !similarChars.includes(value)
+      })
+    }
     charEnsure += symbolsArray[Math.floor(Math.random() * symbolsArray.length)];
     counter++;
     characterPool.push(...symbolsArray);

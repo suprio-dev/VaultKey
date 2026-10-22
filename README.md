@@ -24,6 +24,7 @@ A sleek, responsive password generator built with HTML, Tailwind CSS, and JavaSc
 - Responsive user interface
 - Modern dark UI with violet accents and subtle gradients
 - Asynchronous clipboard operations using `async/await`
+- Exclude similar characters
 
 ---
 
