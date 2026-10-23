@@ -190,6 +190,7 @@ resetBtn.addEventListener('click', (e) => {
   lowercase.checked = false;
   numbers.checked = false;
   symbols.checked = false;
+  excludeSimilar.checked = false;
   strengthLabel.textContent = `Not generated`;
   strengthBar.innerHTML = `<span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
               <span class="h-1.5 flex-1 rounded-full bg-white/10"></span>
