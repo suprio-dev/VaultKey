@@ -85,6 +85,16 @@ generateBtn.addEventListener('click', (e) => {
       "border-violet-400/30",
       "scale-105"
     );
+
+    setTimeout(() => {
+      copyBtn.innerHTML = `<svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                <rect x="8" y="8" width="12" height="12" rx="2" />
+                <path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" />
+              </svg>`;
+      copyBtn.className("shrink-0 rounded-xl border border-white/10 p-3 text-slate-400 transition hover:border-violet-400/40 hover:bg-violet-400/10 hover:text-violet-300");
+    }, 1500);
+
+
   })
 
 
